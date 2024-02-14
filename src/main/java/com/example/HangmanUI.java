@@ -2,12 +2,10 @@ package com.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.example.HangmanGameService;
 
 public class HangmanUI extends JFrame {
-    private HangmanGameService hangmanGame;
+    public HangmanGameService hangmanGame;
     private JLabel secretWordLabel;
     private JLabel attemptsLeftLabel;
     private JTextField guessField;
@@ -16,8 +14,8 @@ public class HangmanUI extends JFrame {
     public HangmanUI(String[] words, int maxAttempts) {
         hangmanGame = new HangmanGameService(words, maxAttempts);
 
-        setTitle("Hangman Game");
-        setSize(400, 200);
+        setTitle("Hangman Game - :)");
+        setSize(600, 400); // Increase the window size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 1));
 
@@ -26,56 +24,34 @@ public class HangmanUI extends JFrame {
         guessField = new JTextField();
         guessButton = new JButton("Guess");
 
-        guessButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String guess = guessField.getText().toLowerCase();
-                if (guess.length() == 1 && Character.isLetter(guess.charAt(0))) {
-                    if (hangmanGame.guess(guess.charAt(0))) {
-                        secretWordLabel.setText(hangmanGame.getCurrentProgress());
-                        attemptsLeftLabel.setText("Attempts left: " + hangmanGame.getAttemptsLeft());
-                        if (hangmanGame.isGameOver()) {
-                            handleGameOver();
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "You have already guessed that letter. Try again.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Please enter a single letter.");
-                }
-                guessField.setText("");
-            }
-        });
-
-        add(secretWordLabel);
-        add(attemptsLeftLabel);
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(1, 2));
         inputPanel.add(guessField);
         inputPanel.add(guessButton);
+
+        add(secretWordLabel);
+        add(attemptsLeftLabel);
         add(inputPanel);
-
-        setVisible(true);
     }
 
-    private void handleGameOver() {
-        if (hangmanGame.isWordGuessed()) {
-            JOptionPane.showMessageDialog(null,
-                    "Congratulations! You guessed the word: " + hangmanGame.getSecretWord());
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "Sorry, you ran out of attempts. The word was: " + hangmanGame.getSecretWord());
-        }
-        System.exit(0);
+    public void updateUI() {
+        secretWordLabel.setText(hangmanGame.getCurrentProgress());
+        attemptsLeftLabel.setText("Attempts left: " + hangmanGame.getAttemptsLeft());
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                String[] words = { "java", "programming", "computer", "hangman", "algorithm" };
-                int maxAttempts = 6;
-                new HangmanUI(words, maxAttempts);
-            }
-        });
+    public void addGuessButtonListener(ActionListener listener) {
+        guessButton.addActionListener(listener);
+    }
+
+    public String getGuessInput() {
+        return guessField.getText().toLowerCase();
+    }
+
+    public void clearGuessInput() {
+        guessField.setText("");
+    }
+
+    public void displayMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 }
