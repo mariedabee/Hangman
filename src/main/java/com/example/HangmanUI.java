@@ -5,33 +5,46 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class HangmanUI extends JFrame {
-    public HangmanGameService hangmanGame;
+    private HangmanGameService hangmanGame;
     private JLabel secretWordLabel;
     private JLabel attemptsLeftLabel;
     private JTextField guessField;
     private JButton guessButton;
 
+
     public HangmanUI(String[] words, int maxAttempts) {
         hangmanGame = new HangmanGameService(words, maxAttempts);
 
-        setTitle("Hangman Game - :)");
-        setSize(600, 400); // Increase the window size
+        setTitle("Hangman Game");
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(3, 1));
+        setLayout(new BorderLayout());
+
+        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         secretWordLabel = new JLabel(hangmanGame.getCurrentProgress());
-        attemptsLeftLabel = new JLabel("Attempts left: " + hangmanGame.getAttemptsLeft());
-        guessField = new JTextField();
-        guessButton = new JButton("Guess");
+        secretWordLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        centerPanel.add(secretWordLabel);
 
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(1, 2));
+        attemptsLeftLabel = new JLabel("Attempts left: " + hangmanGame.getAttemptsLeft());
+        attemptsLeftLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        centerPanel.add(attemptsLeftLabel);
+
+        add(centerPanel, BorderLayout.CENTER);
+
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        guessField = new JTextField(10);
+        guessButton = new JButton("Guess");
+        guessButton.setFont(new Font("Arial", Font.PLAIN, 18));
         inputPanel.add(guessField);
         inputPanel.add(guessButton);
 
-        add(secretWordLabel);
-        add(attemptsLeftLabel);
-        add(inputPanel);
+        add(inputPanel, BorderLayout.SOUTH);
+    }
+
+    public HangmanGameService getHangmanGame() {
+        return hangmanGame;
     }
 
     public void updateUI() {

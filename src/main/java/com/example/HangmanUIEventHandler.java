@@ -14,9 +14,9 @@ public class HangmanUIEventHandler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String guess = hangmanUI.getGuessInput();
         if (guess.length() == 1 && Character.isLetter(guess.charAt(0))) {
-            if (hangmanUI.hangmanGame.guess(guess.charAt(0))) {
+            if (hangmanUI.getHangmanGame().guess(guess.charAt(0))) {
                 hangmanUI.updateUI();
-                if (hangmanUI.hangmanGame.isGameOver()) {
+                if (hangmanUI.getHangmanGame().isGameOver()) {
                     handleGameOver();
                 }
             } else {
@@ -29,11 +29,11 @@ public class HangmanUIEventHandler implements ActionListener {
     }
 
     private void handleGameOver() {
-        if (hangmanUI.hangmanGame.isWordGuessed()) {
-            hangmanUI.displayMessage("Congratulations! You guessed the word: " + hangmanUI.hangmanGame.getSecretWord());
+        if (hangmanUI.getHangmanGame().isWordGuessed()) {
+            hangmanUI.displayMessage("Congratulations! You guessed the word: " + hangmanUI.getHangmanGame().getSecretWord());
         } else {
             hangmanUI.displayMessage(
-                    "Sorry, you ran out of attempts. The word was: " + hangmanUI.hangmanGame.getSecretWord());
+                    "Sorry, you ran out of attempts. The word was: " + hangmanUI.getHangmanGame().getSecretWord());
         }
         System.exit(0);
     }
