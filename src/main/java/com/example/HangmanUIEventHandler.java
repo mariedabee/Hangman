@@ -19,6 +19,11 @@ public class HangmanUIEventHandler implements ActionListener {
                 if (hangmanUI.getHangmanGame().isGameOver()) {
                     handleGameOver();
                 }
+                // Update the incorrect guesses count and repaint the drawing panel
+                int incorrectGuesses = hangmanUI.getHangmanGame().getMaxAttempts()
+                        - hangmanUI.getHangmanGame().getAttemptsLeft();
+                System.out.print("events " + incorrectGuesses);
+                hangmanUI.getDrawingPanel().setIncorrectGuesses(incorrectGuesses);
             } else {
                 hangmanUI.displayMessage("You have already guessed that letter. Try again.");
             }
@@ -30,7 +35,8 @@ public class HangmanUIEventHandler implements ActionListener {
 
     private void handleGameOver() {
         if (hangmanUI.getHangmanGame().isWordGuessed()) {
-            hangmanUI.displayMessage("Congratulations! You guessed the word: " + hangmanUI.getHangmanGame().getSecretWord());
+            hangmanUI.displayMessage(
+                    "Congratulations! You guessed the word: " + hangmanUI.getHangmanGame().getSecretWord());
         } else {
             hangmanUI.displayMessage(
                     "Sorry, you ran out of attempts. The word was: " + hangmanUI.getHangmanGame().getSecretWord());

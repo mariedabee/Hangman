@@ -17,7 +17,7 @@ public class App {
             HangmanUI hangmanUI = new HangmanUI(words, maxAttempts);
 
             // Create HangmanUIEventHandler instance and add as action listener
-            HangmanUIEventHandler eventHandler = new HangmanUIEventHandler(hangmanUI);
+            HangmanUIEventHandler eventHandler = new HangmanUIEventHandler(hangmanUI );
             hangmanUI.addGuessButtonListener(eventHandler);
 
             // Set the UI visible

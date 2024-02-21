@@ -10,21 +10,28 @@ public class HangmanUI extends JFrame {
     private JLabel attemptsLeftLabel;
     private JTextField guessField;
     private JButton guessButton;
-
+    private HangmanDrawingPanel drawingPanel;
 
     public HangmanUI(String[] words, int maxAttempts) {
         hangmanGame = new HangmanGameService(words, maxAttempts);
 
         setTitle("Hangman Game");
-        setSize(600, 400);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel centerPanel = new JPanel(new GridLayout(2, 3));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
+        // Initialize drawing panel
+        // TODO: why still not visible
+        drawingPanel = new HangmanDrawingPanel();
+        drawingPanel.setPreferredSize(new Dimension(200, 400));
+        setHangmanDrawingPanel(drawingPanel);
+        add(drawingPanel, BorderLayout.WEST); // Add drawing panel to the left side of the frame
+        
         secretWordLabel = new JLabel(hangmanGame.getCurrentProgress());
-        secretWordLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        secretWordLabel.setFont(new Font("Arial", Font.BOLD, 27));
         centerPanel.add(secretWordLabel);
 
         attemptsLeftLabel = new JLabel("Attempts left: " + hangmanGame.getAttemptsLeft());
@@ -67,4 +74,13 @@ public class HangmanUI extends JFrame {
     public void displayMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
+
+    public HangmanDrawingPanel getDrawingPanel() {
+        return drawingPanel;
+    }
+
+    public void setHangmanDrawingPanel(HangmanDrawingPanel hangmanpanel) {
+        this.drawingPanel = hangmanpanel;
+    }
+
 }

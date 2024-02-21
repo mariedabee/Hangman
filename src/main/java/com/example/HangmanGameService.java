@@ -24,8 +24,8 @@ public class HangmanGameService {
         this.attemptsLeft = maxAttempts;
     }
 
-    /* 
-     * Helper method to select a random word from the provided array of words. 
+    /*
+     * Helper method to select a random word from the provided array of words.
      */
     private String getRandomWord(String[] words) {
         Random random = new Random();
@@ -73,7 +73,8 @@ public class HangmanGameService {
     /**
      * Checks if the game is over by determining if the word has been guessed or if
      * there are no attempts left.
-     * @return boolean 
+     * 
+     * @return boolean
      */
     public boolean isGameOver() {
         return isWordGuessed() || attemptsLeft <= 0;
@@ -109,5 +110,9 @@ public class HangmanGameService {
      */
     public String getSecretWord() {
         return secretWord;
+    }
+
+    public int getMaxAttempts() {
+        return maxAttempts;
     }
 }
